@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import * as io from 'socket.io-client';
 import {Observable} from 'rxjs/Observable';
-
+const showdown = require('showdown');
+const converter = new showdown.Converter();
 
 
 
@@ -20,7 +21,7 @@ export class ChatService{
     newUserJoined()
     {
         let observable = new Observable<{user:String, message:String}>(observer=>{
-            this.socket.on('new user joined', (data)=>{
+            this.socket.on('new user joined', (data) => {
                 observer.next(data);
             });
             return () => {this.socket.disconnect();}
@@ -44,9 +45,10 @@ export class ChatService{
         return observable;
     }
 
-    sendMessage(data)
-    {
-        this.socket.emit('message',data);
+    sendMessage(data) {
+        data.message = converter.makeHtml(data.message);
+        console.log('send message', data);
+        this.socket.emit('message', data);
     }
 
     newMessageReceived(){

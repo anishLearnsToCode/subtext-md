@@ -28,9 +28,9 @@
     </div>
 
     <div class="row">
-        <div class="well" style="height:200px; padding:15px;">
+        <div class="well" style="padding:15px; height: 600px; scroll-behavior: auto">
             <div *ngFor="let item of messageArray">
-            <span><strong>{{item.user}} : </strong> {{item.message}}</span>
+                <span><strong>{{item.user}} : </strong> <span [innerHTML]="item.message"></span></span>
             </div>
         </div>
     </div>
