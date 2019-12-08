@@ -5,10 +5,7 @@ const showdown = require('showdown');
 const converter = new showdown.Converter();
 
 
-
 @Injectable()
-
-
 export class ChatService{
 
     private socket = io('http://localhost:3000');
@@ -16,6 +13,13 @@ export class ChatService{
     joinRoom(data)
     {
         this.socket.emit('join',data);
+        if (data.user && data.room) {
+            this.sendMessage({
+                user: data.user,
+                room: data.room,
+                message: 'joined the chatroom ' + data.room
+            });
+        }
     }
 
     newUserJoined()
@@ -24,7 +28,8 @@ export class ChatService{
             this.socket.on('new user joined', (data) => {
                 observer.next(data);
             });
-            return () => {this.socket.disconnect();}
+
+            return () => { this.socket.disconnect(); }
         });
 
         return observable;
@@ -32,6 +37,13 @@ export class ChatService{
 
     leaveRoom(data){
         this.socket.emit('leave',data);
+        if (data.user && data.room) {
+            this.sendMessage({
+                user: data.user,
+                room: data.room,
+                message: 'left the chatroom ' + data.room
+            });
+        }
     }
 
     userLeftRoom(){

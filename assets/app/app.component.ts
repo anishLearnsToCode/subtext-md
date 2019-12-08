@@ -17,7 +17,6 @@ export class AppComponent {
         this._chatService.newUserJoined()
         .subscribe(data=> this.messageArray.push(data));
 
-
         this._chatService.userLeftRoom()
         .subscribe(data=>this.messageArray.push(data));
 
