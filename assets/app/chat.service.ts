@@ -58,7 +58,8 @@ export class ChatService{
     }
 
     sendMessage(data) {
-        data.message = converter.makeHtml(data.message);
+        // data.message = converter.makeHtml(data.message);
+        // data.message = parse(data.message, { generator: generator }).htmlDocument();
         console.log('send message', data);
         this.socket.emit('message', data);
     }
