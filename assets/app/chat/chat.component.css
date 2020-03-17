@@ -1,0 +1,13 @@
+:host {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100vh;
+}
+
+#groups-pane {
+    background: red;
+}
+
+#chats-menu {
+    background: blue;
+}
